@@ -505,8 +505,86 @@ def display_text():
 \n(3) Open processed data\
 \n(4) Print top ten lists\
 \n(5) Search for a name\
+\n(6) Names that appear only once in a year\
+\n(7) Longest name\
+\n(8) Search for names with specific letters\
 ")            
     
+def get_unique_names(names_dict):
+    """
+    Definition
+    
+    Parameter: 
+    None
+    
+    Return
+    None
+    """    
+    user_year = input("Enter a year (1980 - 2017): ")
+    boy_list = []
+    girl_list = []
+    count = 0
+    max_boy = 0
+    max_girl = 0
+    
+    while user_year.isdigit() == False or int(user_year) > 2017 or int(user_year) < 1980:
+        
+        user_year = input("Enter a year (1980 - 2017): ")
+    
+    user_year = int(user_year)
+    
+    for key, value in names_dict.items():
+        
+        for item in value:
+            
+            if item[2] == user_year and item[0] == 1:
+                
+                if item[1] == 'Boy':
+                    
+                    boy_list.append(key)
+                    if len(key) > max_boy:
+                        max_boy = len(key)
+                        
+                if item[1] == 'Girl':
+                    
+                    girl_list.append(key)
+                    if len(key) > max_girl:
+                        max_girl = len(key)
+    
+    max_boy = max_boy - max_boy % 8
+    max_girl = max_girl - max_girl % 8
+    
+    for boy in boy_list:
+        count += 1
+        
+        
+    
+    '''
+    for boy in boy_list:
+        count += 1
+        
+        if len(boy) >= 24:
+            print(boy, end = "\t")
+        
+        if len(boy) >= 16 and len(boy) < 24:
+            print(boy, end = "\t\t")
+            
+        if len(boy) >= 8 and len(boy) < 16:
+            print(boy, end = "\t\t\t")
+                
+        if len(boy) < 8:
+            print(boy, end = "\t\t\t\t")
+            
+        if count % 4 == 0:
+            print()
+    '''
+    
+def longest_names(names_dict):
+    return
+
+def wildcard_search(names_dict):
+    return
+
 def main():
     """
     The function displays the menu, gets the menu choice from the user, and
@@ -541,24 +619,30 @@ def main():
 
         if user_choice == "1":
             dict_top_ten, dict_names = load_file("baby-names-frequency-2017.txt")
-            display_text()
+            #dict_top_ten, dict_names = load_file("test_data.txt")
             
         if user_choice == "2":
             save_dicts("baby_names.p", dict_top_ten, dict_names)
-            display_text()
         
         if user_choice == "3":
             dict_top_ten, dict_names = load_pickle("baby_names.p")
-            display_text()
             
         if user_choice == "4":
             print_top_ten(dict_top_ten)
-            display_text()
             
         if user_choice == "5":
             name_search(dict_names)
-            display_text()
+            
+        if user_choice == "6":
+            get_unique_names(dict_names)
         
+        if user_choice == "7":
+            longest_names(names_dict)
+        
+        if user_choice == "8":
+            wildcard_search(names_dict)
+        
+        display_text()
         user_choice = input("\nEnter command: ")
     
     '''
@@ -569,3 +653,5 @@ def main():
         print("Goodbye")
         
     return
+
+main()
